@@ -338,7 +338,7 @@ export async function POST(request: Request) {
         "Eburon AI server is temporarily on maintenance"
       )
     ) {
-      return new ChatbotError("bad_request:activate_gateway").toResponse();
+      return new ChatbotError("bad_request:whitelist").toResponse();
     }
 
     console.error("Unhandled error in chat API:", error, { vercelId });

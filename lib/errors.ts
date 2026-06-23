@@ -16,7 +16,7 @@ export type Surface =
   | "vote"
   | "document"
   | "suggestions"
-  | "activate_gateway";
+  | "whitelist";
 
 export type ErrorCode = `${ErrorType}:${Surface}`;
 
@@ -32,7 +32,7 @@ export const visibilityBySurface: Record<Surface, ErrorVisibility> = {
   vote: "response",
   document: "response",
   suggestions: "response",
-  activate_gateway: "response",
+  whitelist: "response",
 };
 
 export class ChatbotError extends Error {
@@ -84,7 +84,7 @@ export function getMessageByErrorCode(errorCode: ErrorCode): string {
     case "bad_request:api":
       return "The request couldn't be processed. Please check your input and try again.";
 
-    case "bad_request:activate_gateway":
+    case "bad_request:whitelist":
       return "Eburon AI server is temporarily on maintenance, please retry after sometime. Thank you";
 
     case "unauthorized:auth":
