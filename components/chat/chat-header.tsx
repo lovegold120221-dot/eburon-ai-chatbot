@@ -5,7 +5,6 @@ import Link from "next/link";
 import { memo } from "react";
 import { Button } from "@/components/ui/button";
 import { useSidebar } from "@/components/ui/sidebar";
-import { VercelIcon } from "./icons";
 import { VisibilitySelector, type VisibilityType } from "./visibility-selector";
 
 function PureChatHeader({
@@ -40,7 +39,7 @@ function PureChatHeader({
         rel="noopener noreferrer"
         target="_blank"
       >
-        <VercelIcon size={14} />
+        <img src="https://eburon.ai/icon-eburon.svg" alt="Eburon AI" className="size-5" />
       </Link>
 
       {!isReadonly && (
@@ -59,7 +58,7 @@ function PureChatHeader({
           rel="noopener noreferrer"
           target="_blank"
         >
-          <VercelIcon size={16} />
+          <img src="https://eburon.ai/icon-eburon.svg" alt="Eburon AI" className="size-4" />
           Eburon AI
         </Link>
       </Button>
