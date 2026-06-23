@@ -715,6 +715,7 @@ function PureModelSelectorCompact({
               openai: "Eburon",
               xai: "Eburon",
               google: "Eburon",
+              ollama: "Eburon Local",
             };
 
             return sortedKeys.map((key) => (

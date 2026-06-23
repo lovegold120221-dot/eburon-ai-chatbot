@@ -86,6 +86,24 @@ export const chatModels: ChatModel[] = [
     gatewayOrder: ["vertex"],
     vision: true,
   },
+  {
+    id: "ollama/llama3.2",
+    name: "Eburon Local",
+    provider: "ollama",
+    description: "Self-hosted via Ollama middleware",
+  },
+  {
+    id: "ollama/qwen2.5",
+    name: "Eburon Local Pro",
+    provider: "ollama",
+    description: "Self-hosted via Ollama middleware",
+  },
+  {
+    id: "ollama/deepseek-r1",
+    name: "Eburon Local Thinking",
+    provider: "ollama",
+    description: "Self-hosted reasoning model via Ollama middleware",
+  },
 ];
 
 export async function getCapabilities(): Promise<
@@ -93,6 +111,18 @@ export async function getCapabilities(): Promise<
 > {
   const results = await Promise.all(
     chatModels.map(async (model) => {
+      // Ollama models: use static capabilities (no gateway endpoint to query)
+      if (model.provider === "ollama") {
+        return [
+          model.id,
+          {
+            tools: model.id.includes("qwen") || model.id.includes("llama"),
+            vision: false,
+            reasoning: model.id.includes("r1") || model.id.includes("reasoning"),
+          },
+        ];
+      }
+
       try {
         const res = await fetch(
           `https://ai-gateway.vercel.sh/v1/models/${model.id}/endpoints`,
