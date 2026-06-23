@@ -292,11 +292,12 @@ export async function POST(request: Request) {
         }
       },
       onError: (error) => {
+        const msg = error instanceof Error ? error.message : "";
         if (
-          error instanceof Error &&
-          error.message?.includes(
-            "Eburon AI server is temporarily on maintenance"
-          )
+          msg.includes("Eburon AI server is temporarily on maintenance") ||
+          msg.includes("Free tier requests") ||
+          msg.includes("rate-limited") ||
+          msg.includes("Upgrade to paid credits")
         ) {
           return "Eburon AI server is temporarily on maintenance, please retry after sometime. Thank you";
         }
@@ -334,9 +335,10 @@ export async function POST(request: Request) {
 
     if (
       error instanceof Error &&
-      error.message?.includes(
-        "Eburon AI server is temporarily on maintenance"
-      )
+      (error.message?.includes("Eburon AI server is temporarily on maintenance") ||
+        error.message?.includes("Free tier requests") ||
+        error.message?.includes("rate-limited") ||
+        error.message?.includes("Upgrade to paid credits"))
     ) {
       return new ChatbotError("bad_request:whitelist").toResponse();
     }
