@@ -704,6 +704,7 @@ function PureModelSelectorCompact({
               moonshotai: "Eburon",
               openai: "Eburon",
               xai: "Eburon",
+              google: "Eburon",
             };
 
             return sortedKeys.map((key) => (

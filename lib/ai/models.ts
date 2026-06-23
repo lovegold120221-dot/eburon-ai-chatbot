@@ -61,6 +61,27 @@ export const chatModels: ChatModel[] = [
     description: "Fast non-reasoning model with tool use",
     gatewayOrder: ["xai"],
   },
+  {
+    id: "google/gemini-2.5-flash-lite",
+    name: "Eburon Lite",
+    provider: "google",
+    description: "Ultra-fast, cost-efficient model with 1M context",
+    gatewayOrder: ["vertex"],
+  },
+  {
+    id: "google/gemini-2.5-flash",
+    name: "Eburon Flash Pro",
+    provider: "google",
+    description: "High-performance model with 1M context",
+    gatewayOrder: ["vertex"],
+  },
+  {
+    id: "google/gemini-2.5-flash-preview-12-2025",
+    name: "Eburon Flash Preview",
+    provider: "google",
+    description: "Preview of next-gen Flash model with 1M context",
+    gatewayOrder: ["vertex"],
+  },
 ];
 
 export async function getCapabilities(): Promise<
