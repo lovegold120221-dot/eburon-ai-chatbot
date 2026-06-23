@@ -86,38 +86,80 @@ export const chatModels: ChatModel[] = [
     gatewayOrder: ["vertex"],
     vision: true,
   },
-  {
-    id: "ollama/eburon/alpha:latest",
-    name: "Eburon Alpha",
-    provider: "ollama",
-    description: "Self-hosted 23B flagship model",
-  },
-  {
-    id: "ollama/eburon/beta:latest",
-    name: "Eburon Beta Local",
-    provider: "ollama",
-    description: "Self-hosted compact 1.1GB model",
-  },
-  {
-    id: "ollama/eburon/alphard:latest",
-    name: "Eburon Alphard",
-    provider: "ollama",
-    description: "Self-hosted 3.3GB model",
-  },
-  {
-    id: "ollama/eburon/mantis:latest",
-    name: "Eburon Mantis",
-    provider: "ollama",
-    description: "Self-hosted 4.9GB model",
-  },
-  {
-    id: "ollama/moondream:latest",
-    name: "Eburon Vision",
-    provider: "ollama",
-    description: "Self-hosted vision-language model",
-    vision: true,
-  },
 ];
+
+// --- Ollama auto-detection ---
+const OLLAMA_MIDDLEWARE_URL =
+  process.env.OLLAMA_MIDDLEWARE_URL ?? "http://localhost:11434";
+
+// Models that should get vision capability
+const VISION_MODEL_HINTS = ["moondream", "llava", "vision", "bakllava", "minicpm"];
+// Models that should get reasoning capability
+const REASONING_MODEL_HINTS = ["mantis", "alphard", "deepseek-r1", "qwq", "reasoning"];
+
+function guessCapabilities(modelId: string): ModelCapabilities {
+  const lower = modelId.toLowerCase();
+  return {
+    tools: true,
+    vision: VISION_MODEL_HINTS.some((h) => lower.includes(h)),
+    reasoning: REASONING_MODEL_HINTS.some((h) => lower.includes(h)),
+  };
+}
+
+function ollamaIdToName(id: string): string {
+  // e.g. "eburon/alpha:latest" → "Eburon Alpha"
+  const withoutTag = id.replace(/:latest$/, "").replace(/:.+$/, "");
+  const parts = withoutTag.split("/");
+  const name = parts[parts.length - 1];
+  return name
+    .split(/[-_]/)
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+    .join(" ");
+}
+
+export async function getOllamaModels(): Promise<ChatModel[]> {
+  try {
+    const res = await fetch(`${OLLAMA_MIDDLEWARE_URL}/v1/models`, {
+      signal: AbortSignal.timeout(3000),
+    });
+    if (!res.ok) return [];
+
+    const json = await res.json();
+    const models = (json.data ?? []) as Array<{
+      id: string;
+      owned_by?: string;
+    }>;
+
+    return models.map((m) => {
+      const ollamaName = m.id.replace(/^ollama\//, "");
+      return {
+        id: `ollama/${ollamaName}`,
+        name: ollamaIdToName(ollamaName),
+        provider: "ollama",
+        description: "Self-hosted via Ollama",
+        vision: guessCapabilities(ollamaName).vision,
+      };
+    });
+  } catch {
+    return [];
+  }
+}
+
+export async function getActiveModels(): Promise<ChatModel[]> {
+  const ollamaModels = await getOllamaModels();
+  return [...chatModels, ...ollamaModels];
+}
+
+// Sync version for places that don't need Ollama models
+export function getStaticModels(): ChatModel[] {
+  return chatModels;
+}
+
+// Build allowed model IDs dynamically (includes Ollama if available)
+export async function getAllowedModelIds(): Promise<Set<string>> {
+  const active = await getActiveModels();
+  return new Set(active.map((m) => m.id));
+}
 
 export async function getCapabilities(): Promise<
   Record<string, ModelCapabilities>
