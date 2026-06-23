@@ -79,7 +79,7 @@ export const chatModels: ChatModel[] = [
     vision: true,
   },
   {
-    id: "google/gemini-2.5-flash-preview-12-2025",
+    id: "google/gemini-2.5-flash-preview-09-2025",
     name: "Eburon Flash Preview",
     provider: "google",
     description: "Preview of next-gen Flash model with 1M context",
