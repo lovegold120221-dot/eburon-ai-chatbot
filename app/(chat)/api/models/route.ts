@@ -38,11 +38,9 @@ export async function GET() {
 
   // Include Ollama models in the response so the frontend can display them
   if (ollamaModels.length > 0) {
+    const allModels = [...chatModels, ...ollamaModels];
     return Response.json(
-      {
-        ...allCapabilities,
-        models: [...chatModels, ...ollamaModels],
-      },
+      { capabilities: allCapabilities, models: allModels },
       { headers }
     );
   }
