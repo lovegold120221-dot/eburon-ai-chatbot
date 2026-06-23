@@ -175,10 +175,10 @@ export const ModelSelectorLogo = ({
 }: ModelSelectorLogoProps) => (
   <img
     {...props}
-    alt={`${provider} logo`}
+    alt="Eburon AI logo"
     className={cn("size-4 dark:invert", className)}
     height={16}
-    src={`https://models.dev/logos/${provider}.svg`}
+    src="https://eburon.ai/icon-eburon.svg"
     width={16}
   />
 );
