@@ -225,12 +225,21 @@ function PureMultimodalInput({
     sendMessage({
       role: "user",
       parts: [
-        ...attachments.map((attachment) => ({
-          type: "file" as const,
-          url: attachment.url,
-          name: attachment.name,
-          mediaType: attachment.contentType,
-        })),
+        ...attachments.map((attachment) => {
+          const isImage = attachment.contentType?.startsWith("image/");
+          if (isImage) {
+            return {
+              type: "image" as const,
+              image: attachment.url,
+            };
+          }
+          return {
+            type: "file" as const,
+            url: attachment.url,
+            name: attachment.name,
+            mediaType: attachment.contentType,
+          };
+        }),
         {
           type: "text",
           text: input,
@@ -399,6 +408,7 @@ function PureMultimodalInput({
         )}
 
       <input
+        accept=".pdf,.doc,.docx,.xls,.xlsx,.txt,.md,.csv,.jpg,.jpeg,.png,.webp,.gif,.heic,.heif,.tiff,.bmp,.svg"
         className="pointer-events-none fixed -top-4 -left-4 size-0.5 opacity-0"
         multiple
         onChange={handleFileChange}

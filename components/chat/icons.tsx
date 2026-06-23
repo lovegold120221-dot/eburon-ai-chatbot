@@ -284,6 +284,60 @@ export const FileIcon = ({ size = 16 }: { size?: number }) => {
   );
 };
 
+export const FileTextIcon = ({ size = 16 }: { size?: number }) => {
+  return (
+    <svg
+      height={size}
+      strokeLinejoin="round"
+      style={{ color: "currentColor" }}
+      viewBox="0 0 16 16"
+      width={size}
+    >
+      <path
+        d="M2.5 0.5C1.67157 0.5 1 1.17157 1 1.5V15C1 15.8284 1.67157 16.5 2.5 16.5H13.5C14.3284 16.5 15 15.8284 15 15V8.5H11.5C10.67157 8.5 10 7.82843 10 7V3.5H2.5ZM15 8.5V15C15 15.8284 14.3284 16.5 13.5 16.5H2.5C1.67157 16.5 1 15.8284 1 15V1.5C1 0.67157 1.67157 0 2.5 0H8H9.08579C9.351 0 9.60536 0.105357 9.79289 0.292893L14.2071 4.70711C14.3946 4.89464 14.5 5.149 14.5 5.41421V8.5ZM13 8.5V5.5H9.5H8V5V1.5H3V8.5H13Z"
+        fill="currentColor"
+        fillRule="evenodd"
+      />
+    </svg>
+  );
+};
+
+export const FileSpreadsheetIcon = ({ size = 16 }: { size?: number }) => {
+  return (
+    <svg
+      height={size}
+      strokeLinejoin="round"
+      style={{ color: "currentColor" }}
+      viewBox="0 0 16 16"
+      width={size}
+    >
+      <path
+        d="M2.5 0.5C1.67157 0.5 1 1.17157 1 1.5V15C1 15.8284 1.67157 16.5 2.5 16.5H13.5C14.3284 16.5 15 15.8284 15 15V8.5H11.5C10.67157 8.5 10 7.82843 10 7V3.5H2.5ZM15 8.5V15C15 15.8284 14.3284 16.5 13.5 16.5H2.5C1.67157 16.5 1 15.8284 1 15V1.5C1 0.67157 1.67157 0 2.5 0H8H9.08579C9.351 0 9.60536 0.105357 9.79289 0.292893L14.2071 4.70711C14.3946 4.89464 14.5 5.149 14.5 5.41421V8.5ZM13 8.5V5.5H9.5H8V5V1.5H3V8.5H13Z"
+        fill="currentColor"
+        fillRule="evenodd"
+      />
+    </svg>
+  );
+};
+
+export const FileImageIcon = ({ size = 16 }: { size?: number }) => {
+  return (
+    <svg
+      height={size}
+      strokeLinejoin="round"
+      style={{ color: "currentColor" }}
+      viewBox="0 0 16 16"
+      width={size}
+    >
+      <path
+        d="M14.5 13.5V6.5V5.41421C14.5 5.149 14.3946 4.89464 14.2071 4.70711L9.79289 0.292893C9.60536 0.105357 9.351 0 9.08579 0H8H3H1.5V1.5V13.5C1.5 14.8807 2.61929 16 4 16H12C13.3807 16 14.5 14.8807 14.5 13.5ZM13 13.5V6.5H9.5H8V5V1.5H3V13.5C3 14.0523 3.44772 14.5 4 14.5H12C12.5523 14.5 13 14.0523 13 13.5ZM9.5 5V2.12132L12.3787 5H9.5Z"
+        fill="currentColor"
+        fillRule="evenodd"
+      />
+    </svg>
+  );
+};
+
 export const LoaderIcon = ({ size = 16 }: { size?: number }) => {
   return (
     <svg

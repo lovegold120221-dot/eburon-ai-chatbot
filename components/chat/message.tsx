@@ -45,7 +45,7 @@ const PurePreviewMessage = ({
   onEdit?: (message: ChatMessage) => void;
 }) => {
   const attachmentsFromMessage = message.parts.filter(
-    (part) => part.type === "file"
+    (part) => part.type === "file" || part.type === "image"
   );
 
   useDataStream();
@@ -71,11 +71,11 @@ const PurePreviewMessage = ({
       {attachmentsFromMessage.map((attachment) => (
         <PreviewAttachment
           attachment={{
-            name: attachment.filename ?? "file",
-            contentType: attachment.mediaType,
-            url: attachment.url,
+            name: attachment.type === "image" ? "image" : attachment.filename ?? "file",
+            contentType: attachment.mediaType ?? (attachment.type === "image" ? "image" : undefined),
+            url: attachment.type === "image" ? attachment.image : attachment.url,
           }}
-          key={attachment.url}
+          key={attachment.url ?? attachment.image}
         />
       ))}
     </div>

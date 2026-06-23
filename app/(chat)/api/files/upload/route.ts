@@ -4,14 +4,39 @@ import { z } from "zod";
 
 import { auth } from "@/app/(auth)/auth";
 
+const ALLOWED_IMAGE_TYPES = [
+  "image/jpeg",
+  "image/png",
+  "image/webp",
+  "image/gif",
+  "image/heic",
+  "image/heif",
+  "image/tiff",
+  "image/bmp",
+  "image/svg+xml",
+];
+
+const ALLOWED_DOCUMENT_TYPES = [
+  "application/pdf",
+  "text/plain",
+  "text/markdown",
+  "text/csv",
+  "application/msword",
+  "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+  "application/vnd.ms-excel",
+  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+];
+
+const ALLOWED_TYPES = [...ALLOWED_IMAGE_TYPES, ...ALLOWED_DOCUMENT_TYPES];
+
 const FileSchema = z.object({
   file: z
     .instanceof(Blob)
-    .refine((file) => file.size <= 5 * 1024 * 1024, {
-      message: "File size should be less than 5MB",
+    .refine((file) => file.size <= 25 * 1024 * 1024, {
+      message: "File size should be less than 25MB",
     })
-    .refine((file) => ["image/jpeg", "image/png"].includes(file.type), {
-      message: "File type should be JPEG or PNG",
+    .refine((file) => ALLOWED_TYPES.includes(file.type), {
+      message: `File type ${file.type} not supported. Allowed: images (JPEG, PNG, WebP, GIF, HEIC, TIFF, BMP, SVG) and documents (PDF, TXT, MD, CSV, DOC, DOCX, XLS, XLSX)`,
     }),
 });
 
