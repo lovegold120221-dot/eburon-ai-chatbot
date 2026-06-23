@@ -158,14 +158,21 @@ export function ActiveChatProvider({ children }: { children: ReactNode }) {
       mutate(unstable_serialize(getChatHistoryPaginationKey));
     },
     onError: (error) => {
-      if (error.message?.includes("Eburon AI server is temporarily on maintenance")) {
+      const msg = error.message ?? "";
+      if (
+        msg.includes("Eburon AI server is temporarily on maintenance") ||
+        msg.includes("Free tier requests") ||
+        msg.includes("rate-limited") ||
+        msg.includes("Upgrade to paid credits") ||
+        msg.includes("credit card")
+      ) {
         setShowCreditCardAlert(true);
       } else if (error instanceof ChatbotError) {
         toast({ type: "error", description: error.message });
       } else {
         toast({
           type: "error",
-          description: error.message || "Oops, an error occurred!",
+          description: "Oops, an error occurred!",
         });
       }
     },
