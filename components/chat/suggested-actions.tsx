@@ -46,7 +46,7 @@ function PureSuggestedActions({ chatId, sendMessage }: SuggestedActionsProps) {
               window.history.pushState(
                 {},
                 "",
-                `https://eburon.ai/chat/${chatId}`
+                `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/chat/${chatId}`
               );
               sendMessage({
                 role: "user",
