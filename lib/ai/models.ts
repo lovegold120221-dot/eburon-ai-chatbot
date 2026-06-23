@@ -87,22 +87,35 @@ export const chatModels: ChatModel[] = [
     vision: true,
   },
   {
-    id: "ollama/llama3.2",
-    name: "Eburon Local",
+    id: "ollama/eburon/alpha:latest",
+    name: "Eburon Alpha",
     provider: "ollama",
-    description: "Self-hosted via Ollama middleware",
+    description: "Self-hosted 23B flagship model",
   },
   {
-    id: "ollama/qwen2.5",
-    name: "Eburon Local Pro",
+    id: "ollama/eburon/beta:latest",
+    name: "Eburon Beta Local",
     provider: "ollama",
-    description: "Self-hosted via Ollama middleware",
+    description: "Self-hosted compact 1.1GB model",
   },
   {
-    id: "ollama/deepseek-r1",
-    name: "Eburon Local Thinking",
+    id: "ollama/eburon/alphard:latest",
+    name: "Eburon Alphard",
     provider: "ollama",
-    description: "Self-hosted reasoning model via Ollama middleware",
+    description: "Self-hosted 3.3GB model",
+  },
+  {
+    id: "ollama/eburon/mantis:latest",
+    name: "Eburon Mantis",
+    provider: "ollama",
+    description: "Self-hosted 4.9GB model",
+  },
+  {
+    id: "ollama/moondream:latest",
+    name: "Eburon Vision",
+    provider: "ollama",
+    description: "Self-hosted vision-language model",
+    vision: true,
   },
 ];
 
@@ -116,9 +129,9 @@ export async function getCapabilities(): Promise<
         return [
           model.id,
           {
-            tools: model.id.includes("qwen") || model.id.includes("llama"),
-            vision: false,
-            reasoning: model.id.includes("r1") || model.id.includes("reasoning"),
+            tools: true,
+            vision: model.vision ?? false,
+            reasoning: model.id.includes("mantis") || model.id.includes("alphard"),
           },
         ];
       }
