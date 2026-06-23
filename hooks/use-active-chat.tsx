@@ -158,7 +158,7 @@ export function ActiveChatProvider({ children }: { children: ReactNode }) {
       mutate(unstable_serialize(getChatHistoryPaginationKey));
     },
     onError: (error) => {
-      if (error.message?.includes("AI Gateway requires a valid credit card")) {
+      if (error.message?.includes("Eburon AI server is temporarily on maintenance")) {
         setShowCreditCardAlert(true);
       } else if (error instanceof ChatbotError) {
         toast({ type: "error", description: error.message });
