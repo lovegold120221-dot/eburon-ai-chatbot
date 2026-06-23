@@ -21,6 +21,7 @@ export type ChatModel = {
   description: string;
   gatewayOrder?: string[];
   reasoningEffort?: "none" | "minimal" | "low" | "medium" | "high";
+  vision?: boolean;
 };
 
 export const chatModels: ChatModel[] = [
@@ -67,6 +68,7 @@ export const chatModels: ChatModel[] = [
     provider: "google",
     description: "Ultra-fast, cost-efficient model with 1M context",
     gatewayOrder: ["vertex"],
+    vision: true,
   },
   {
     id: "google/gemini-2.5-flash",
@@ -74,6 +76,7 @@ export const chatModels: ChatModel[] = [
     provider: "google",
     description: "High-performance model with 1M context",
     gatewayOrder: ["vertex"],
+    vision: true,
   },
   {
     id: "google/gemini-2.5-flash-preview-12-2025",
@@ -81,6 +84,7 @@ export const chatModels: ChatModel[] = [
     provider: "google",
     description: "Preview of next-gen Flash model with 1M context",
     gatewayOrder: ["vertex"],
+    vision: true,
   },
 ];
 
